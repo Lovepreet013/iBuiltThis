@@ -7,6 +7,13 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '../ui/button';
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs';
 
 const Logo = () => {
   return (
@@ -49,26 +56,24 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {isSignedIn ? (
-              <>
-                <Button asChild>
-                  <Link href="/submit">
-                    <SparkleIcon className="size-4" />
-                    Submit Project
-                  </Link>
-                </Button>
-
-                {/* replaced with clerk user button */}
-                <Button variant="ghost">
-                  <UserIcon />
-                </Button>
-              </>
-            ) : (
-              <>
+            <SignedOut>
+              <SignInButton>
                 <Button variant="ghost">Sign In</Button>
+              </SignInButton>
+              <SignUpButton>
                 <Button>Sign Up</Button>
-              </>
-            )}
+              </SignUpButton>
+            </SignedOut>
+
+            <SignedIn>
+              <Button asChild>
+                <Link href="/submit">
+                  <SparkleIcon className="size-4" />
+                  Submit Project
+                </Link>
+              </Button>
+              <UserButton />
+            </SignedIn>
           </div>
         </div>
       </div>
