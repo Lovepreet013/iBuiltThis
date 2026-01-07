@@ -1,31 +1,14 @@
+'use cache';
+
 import { ArrowUpRightIcon, StarIcon } from 'lucide-react';
 import SectionHeader from '../common/section-header';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import ProductCard from '../products/product-card';
+import { getFeaturedProducts } from '@/lib/products/product-select';
 
-const featuredProducts = [
-  {
-    id: 1,
-    name: 'Power Parity',
-    description: `AI-powered energy consumption optimizer for smart homes.`,
-    websiteUrl: 'https://google.com',
-    tags: ['AI', 'Energy', 'Smart Home'],
-    votes: 124,
-    isFeatured: true,
-  },
-  {
-    id: 2,
-    name: 'Power Parity',
-    description: `AI-powered energy consumption optimizer for smart homes.`,
-    websiteUrl: 'https://google.com',
-    tags: ['AI', 'Energy', 'Smart Home'],
-    votes: 124,
-    isFeatured: false,
-  },
-];
-
-export default function FeaturedProducts() {
+export default async function FeaturedProducts() {
+  const featuredProducts = await getFeaturedProducts();
   return (
     <section className="py-20 bg-muted/30">
       <div className="wrapper">

@@ -1,11 +1,13 @@
+// 'use cache'; we can't do that as we want dynamic data at runtime so we are using connection in recentlyLaunchedProducts function
+
 import { CalendarIcon, RocketIcon } from 'lucide-react';
 import SectionHeader from '../common/section-header';
-import ProductCard from '../products/product-card';
+import ProductCard, { Product } from '../products/product-card';
 import EmptyState from '../common/empty-state';
+import { getRecentlyLaunchedProducts } from '@/lib/products/product-select';
 
-const recentlyLaunchedProducts: any = [];
-
-export default function RecentlyLaunchedProducts() {
+export default async function RecentlyLaunchedProducts() {
+  const recentlyLaunchedProducts = await getRecentlyLaunchedProducts();
   return (
     <section className="py-20">
       <div className="wrapper space-y-9">
@@ -17,7 +19,7 @@ export default function RecentlyLaunchedProducts() {
 
         {recentlyLaunchedProducts.length > 0 ? (
           <div className="grid-wrapper">
-            {recentlyLaunchedProducts.map((product: any) => (
+            {recentlyLaunchedProducts.map((product: Product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
