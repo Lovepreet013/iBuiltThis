@@ -8,6 +8,7 @@ import z from 'zod';
 import { FormState } from '@/types';
 import { eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { error } from 'console';
 
 export const addProductAction = async (
   prevState: FormState,
@@ -23,6 +24,7 @@ export const addProductAction = async (
       return {
         success: false,
         message: 'You must be logged in to submit a product.',
+        errors: undefined,
       };
     }
 
@@ -30,6 +32,7 @@ export const addProductAction = async (
       return {
         success: false,
         message: 'You must be a member of an organization to submit a product.',
+        errors: undefined,
       };
     }
 
@@ -74,6 +77,7 @@ export const addProductAction = async (
     return {
       success: true,
       message: 'Product submitted successfully! It will be reviewed shortly.',
+      errors: undefined,
     };
   } catch (error) {
     console.log(error);
@@ -103,6 +107,7 @@ export const productUpvoteAction = async (productId: number) => {
       return {
         success: false,
         message: 'You must be logged in to submit a product.',
+        errors: undefined,
       };
     }
 
@@ -110,6 +115,7 @@ export const productUpvoteAction = async (productId: number) => {
       return {
         success: false,
         message: 'You must be a member of an organization to submit a product.',
+        errors: undefined,
       };
     }
 
@@ -137,6 +143,7 @@ export const productUpvoteAction = async (productId: number) => {
       success: true,
       message: 'Product upvoted successfully!',
       voteCount: productId,
+      errors: undefined,
     };
   } catch (error) {
     console.log(error);
@@ -157,6 +164,7 @@ export const productDownVoteAction = async (productId: number) => {
       return {
         success: false,
         message: 'You must be logged in to submit a product.',
+        errors: undefined,
       };
     }
 
@@ -164,6 +172,7 @@ export const productDownVoteAction = async (productId: number) => {
       return {
         success: false,
         message: 'You must be a member of an organization to submit a product.',
+        errors: undefined,
       };
     }
 
@@ -191,6 +200,7 @@ export const productDownVoteAction = async (productId: number) => {
       success: true,
       message: 'Product downvoted successfully!',
       voteCount: productId,
+      errors: undefined,
     };
   } catch (error) {
     console.log(error);

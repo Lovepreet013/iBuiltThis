@@ -28,6 +28,11 @@ export default function ProductSubmitForm() {
   // };
 
   const { success, errors, message } = state;
+  const getFieldsErrors = (fieldName: string): string[] => {
+    if (!errors) return [];
+
+    return (errors as Record<string, string[]>)[fieldName] ?? [];
+  };
 
   return (
     <form className="space-y-6" action={formAction}>
@@ -53,7 +58,7 @@ export default function ProductSubmitForm() {
         placeholder="Enter your product name"
         required
         onChange={() => {}}
-        errors={errors?.name || []}
+        errors={getFieldsErrors('name')}
       />
       <FormField
         label="Slug"
@@ -62,7 +67,7 @@ export default function ProductSubmitForm() {
         placeholder="Enter your product slug"
         required
         onChange={() => {}}
-        errors={errors?.slug || []}
+        errors={getFieldsErrors('slug')}
         helperText="The slug is URL-friendly and will be used to identify your product."
       />
       <FormField
@@ -72,7 +77,7 @@ export default function ProductSubmitForm() {
         placeholder="Enter your product tagline"
         required
         onChange={() => {}}
-        errors={errors?.tagline || []}
+        errors={getFieldsErrors('tagline')}
       />
       <FormField
         label="Description"
@@ -81,7 +86,7 @@ export default function ProductSubmitForm() {
         placeholder="Enter your product description"
         required
         onChange={() => {}}
-        errors={errors?.description || []}
+        errors={getFieldsErrors('description')}
         textarea={true}
       />
       <FormField
@@ -91,7 +96,7 @@ export default function ProductSubmitForm() {
         placeholder="Enter your product website URL"
         required
         onChange={() => {}}
-        errors={errors?.websiteUrl || []}
+        errors={getFieldsErrors('websiteURL')}
       />
       <FormField
         label="Tags"
@@ -100,7 +105,7 @@ export default function ProductSubmitForm() {
         placeholder="Enter your product tags"
         required
         onChange={() => {}}
-        errors={errors?.tags || []}
+        errors={getFieldsErrors('tags')}
         helperText="Separate tags with commas (e.g. AI, Productivity, Tools)"
       />
       <Button type="submit" className="w-full">
