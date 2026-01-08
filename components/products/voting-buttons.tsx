@@ -7,19 +7,19 @@ import {
   productDownVoteAction,
   productUpvoteAction,
 } from '@/lib/products/product-actions';
-import { useOptimistic, useTransition } from 'react';
+import { useOptimistic, useState, useTransition } from 'react';
 import { useUser } from '@clerk/nextjs';
 
 export default function VotingButtons({
-  hasVoted,
   voteCount: initialVoteCount,
   productId,
 }: {
-  hasVoted?: boolean;
   voteCount: number;
   productId: number;
 }) {
   const { isSignedIn } = useUser();
+
+  const [hasVoted, setHasVoted] = useState(false);
 
   const [optimisticVoteCount, setOptimisticVoteCount] = useOptimistic(
     initialVoteCount,
@@ -33,10 +33,14 @@ export default function VotingButtons({
       alert('You must be signed in to vote.');
       return;
     }
-    startTransition(async () => {
-      setOptimisticVoteCount(1);
-      await productUpvoteAction(productId);
-    });
+
+    if (!hasVoted) {
+      startTransition(async () => {
+        setOptimisticVoteCount(1);
+        await productUpvoteAction(productId);
+      });
+      setHasVoted(true);
+    }
   };
 
   const handleDownVote = async () => {
@@ -44,10 +48,14 @@ export default function VotingButtons({
       alert('You must be signed in to vote.');
       return;
     }
-    startTransition(async () => {
-      setOptimisticVoteCount(-1);
-      await productDownVoteAction(productId);
-    });
+
+    if (hasVoted) {
+      startTransition(async () => {
+        setOptimisticVoteCount(-1);
+        await productDownVoteAction(productId);
+      });
+      setHasVoted(false);
+    }
   };
 
   return (
@@ -64,8 +72,8 @@ export default function VotingButtons({
         size="icon-sm"
         className={cn(
           'h-8 w-8 text-primary',
-          hasVoted
-            ? ' bg-primary/10 text-primary hover:bg-primary/20'
+          hasVoted && isSignedIn
+            ? ' bg-primary/10 text-primary hover:bg-primary/20 cursor-not-allowed'
             : 'hover:bg-primary/10 hover:text-primary'
         )}
         disabled={isPending}
@@ -73,7 +81,12 @@ export default function VotingButtons({
         <ChevronUpIcon className="size-5" />
       </Button>
 
-      <span className="text-sm font-semibold transition-colors text-foreground">
+      <span
+        className={cn(
+          'text-sm font-semibold transition-colors text-foreground',
+          hasVoted && isSignedIn ? 'text-primary' : ''
+        )}
+      >
         {optimisticVoteCount}
       </span>
 

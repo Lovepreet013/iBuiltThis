@@ -1,5 +1,5 @@
 {
-  "id": "a01c5a0d-c0b3-497c-8d1c-05f06d8757a7",
+  "id": "51ccba19-baf7-4a06-9088-74554013729d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -56,6 +56,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": 0
+        },
+        "vote_by": {
+          "name": "vote_by",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

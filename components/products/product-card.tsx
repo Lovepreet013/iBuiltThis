@@ -34,7 +34,6 @@ export default function ProductCard({ product }: { product: Product }) {
 
             {/* Voting Buttons */}
             <VotingButtons
-              hasVoted={hasVoted}
               voteCount={product.voteCount}
               productId={product.id}
             />

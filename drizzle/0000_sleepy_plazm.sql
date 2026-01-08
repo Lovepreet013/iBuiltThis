@@ -7,6 +7,7 @@ CREATE TABLE "products" (
 	"website_url" text,
 	"tags" json,
 	"vote_count" integer DEFAULT 0 NOT NULL,
+	"vote_by" json,
 	"created_at" timestamp with time zone DEFAULT now(),
 	"approved_at" timestamp with time zone,
 	"status" varchar(20) DEFAULT 'pending',

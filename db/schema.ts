@@ -27,6 +27,7 @@ export const products = pgTable(
 
     // Voting
     voteCount: integer('vote_count').notNull().default(0),
+    voteBy: json('vote_by').$type<string[]>(), // Clerk user IDs who voted
 
     // Metadata
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
