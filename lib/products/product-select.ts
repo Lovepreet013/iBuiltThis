@@ -13,7 +13,7 @@ export async function getFeaturedProducts() {
   return productsData;
 }
 
-export async function getAllProducts() {
+export async function getAllApprovedProducts() {
   const productsData = await db
     .select()
     .from(products)
@@ -22,11 +22,19 @@ export async function getAllProducts() {
   return productsData;
 }
 
+export async function getAllProducts() {
+  const productsData = await db
+    .select()
+    .from(products)
+    .orderBy(desc(products.voteCount));
+  return productsData;
+}
+
 //but this function need to be dynamic as recent products are dynamic and we want it at runtime, so we can't use cache here
 export async function getRecentlyLaunchedProducts() {
   //we use connection here
   await connection();
-  const productsData = await getAllProducts();
+  const productsData = await getAllApprovedProducts();
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
