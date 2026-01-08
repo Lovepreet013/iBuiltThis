@@ -66,7 +66,7 @@ export default function HeroSection() {
             {/* asChild allows use to have the Button component render a Link component while still applying all the Button styles and behaviors. */}
             <Button asChild size="lg" className="text-base px-8 shadow-lg">
               <Link href="/submit">
-                <SparklesIcon className="size-5" />
+                {/* <SparklesIcon className="size-5" /> */}
                 Share Your Project
               </Link>
             </Button>
