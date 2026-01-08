@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
-import { ChevronDownIcon, ChevronUpIcon, Loader2Icon } from 'lucide-react';
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 import {
   productDownVoteAction,
   productUpvoteAction,
@@ -14,7 +14,7 @@ export default function VotingButtons({
   voteCount: initialVoteCount,
   productId,
 }: {
-  hasVoted: boolean;
+  hasVoted?: boolean;
   voteCount: number;
   productId: number;
 }) {

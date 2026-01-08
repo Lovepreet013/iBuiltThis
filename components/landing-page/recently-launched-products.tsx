@@ -1,10 +1,11 @@
-// 'use cache'; we can't do that as we want dynamic data at runtime so we are using connection in recentlyLaunchedProducts function
+// 'use cache'; we can't do that as we want dynamic data at runtime so we are using connection() in recentlyLaunchedProducts function
 
 import { CalendarIcon, RocketIcon } from 'lucide-react';
 import SectionHeader from '../common/section-header';
-import ProductCard, { Product } from '../products/product-card';
+import ProductCard from '../products/product-card';
 import EmptyState from '../common/empty-state';
 import { getRecentlyLaunchedProducts } from '@/lib/products/product-select';
+import { Product } from '@/types';
 
 export default async function RecentlyLaunchedProducts() {
   const recentlyLaunchedProducts = await getRecentlyLaunchedProducts();

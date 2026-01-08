@@ -7,7 +7,7 @@ import { products } from '@/db/schema';
 import z from 'zod';
 import { FormState } from '@/types';
 import { eq, sql } from 'drizzle-orm';
-import { refresh, revalidatePath } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 
 export const addProductAction = async (
   prevState: FormState,
@@ -113,6 +113,13 @@ export const productUpvoteAction = async (productId: number) => {
       };
     }
 
+    // Get the product slug before updating for revalidation
+    const product = await db
+      .select({ slug: products.slug })
+      .from(products)
+      .where(eq(products.id, productId))
+      .limit(1);
+
     await db
       .update(products)
       .set({
@@ -120,7 +127,11 @@ export const productUpvoteAction = async (productId: number) => {
       })
       .where(eq(products.id, productId));
 
+    // Revalidate both home page and product detail page
     revalidatePath('/');
+    if (product[0]?.slug) {
+      revalidatePath(`/products/${product[0].slug}`);
+    }
 
     return {
       success: true,
@@ -156,6 +167,13 @@ export const productDownVoteAction = async (productId: number) => {
       };
     }
 
+    // Get the product slug before updating for revalidation
+    const product = await db
+      .select({ slug: products.slug })
+      .from(products)
+      .where(eq(products.id, productId))
+      .limit(1);
+
     await db
       .update(products)
       .set({
@@ -163,7 +181,11 @@ export const productDownVoteAction = async (productId: number) => {
       })
       .where(eq(products.id, productId));
 
+    // Revalidate both home page and product detail page
     revalidatePath('/');
+    if (product[0]?.slug) {
+      revalidatePath(`/products/${product[0].slug}`);
+    }
 
     return {
       success: true,
