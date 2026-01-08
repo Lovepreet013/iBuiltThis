@@ -1,7 +1,11 @@
 import { Loader } from 'lucide-react';
 import { ReactNode, Suspense } from 'react';
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+export default function ProductExplorerLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <Suspense
       fallback={
