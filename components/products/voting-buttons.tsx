@@ -8,6 +8,7 @@ import {
   productUpvoteAction,
 } from '@/lib/products/product-actions';
 import { useOptimistic, useTransition } from 'react';
+import { useUser } from '@clerk/nextjs';
 
 export default function VotingButtons({
   hasVoted,
@@ -18,6 +19,8 @@ export default function VotingButtons({
   voteCount: number;
   productId: number;
 }) {
+  const { isSignedIn } = useUser();
+
   const [optimisticVoteCount, setOptimisticVoteCount] = useOptimistic(
     initialVoteCount,
     (currentCount, change: number) => Math.max(0, currentCount + change)
@@ -26,6 +29,10 @@ export default function VotingButtons({
   const [isPending, startTransition] = useTransition();
 
   const handleUpvote = async () => {
+    if (!isSignedIn) {
+      alert('You must be signed in to vote.');
+      return;
+    }
     startTransition(async () => {
       setOptimisticVoteCount(1);
       await productUpvoteAction(productId);
@@ -33,6 +40,10 @@ export default function VotingButtons({
   };
 
   const handleDownVote = async () => {
+    if (!isSignedIn) {
+      alert('You must be signed in to vote.');
+      return;
+    }
     startTransition(async () => {
       setOptimisticVoteCount(-1);
       await productDownVoteAction(productId);

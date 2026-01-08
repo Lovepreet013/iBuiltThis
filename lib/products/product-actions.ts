@@ -8,7 +8,6 @@ import z from 'zod';
 import { FormState } from '@/types';
 import { eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
-import { error } from 'console';
 
 export const addProductAction = async (
   prevState: FormState,

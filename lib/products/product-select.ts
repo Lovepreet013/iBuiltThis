@@ -14,6 +14,7 @@ export async function getFeaturedProducts() {
 }
 
 export async function getAllApprovedProducts() {
+  await connection();
   const productsData = await db
     .select()
     .from(products)
